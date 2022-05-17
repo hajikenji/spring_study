@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/sample1.css}">
+    <title>Sample1</title>
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    <span th:text="${numPresence}"></span>
+    
+    <form action="/add" method="post">
+        <label>入力フォーム</label>
+        <input name="num" type="text" />
+        <br>
+        <label>名前</label>
+        <input name="name" type="text" />
+        <input type="submit" value="登録" />
+    </form>
+
+    <span th:text="${numAdd}"></span>
+    <span th:text="${name}"></span>
+    <!-- <p th:each="name : ${nameList}">
+        <p th:text="${name.name}"></p>
+    </p> -->
+    <tbody>
+        <tr th:each="name : ${nameList}">
+            <br>
+            <td th:text="${name.name}"></td>
+            <td>
+                <form action="/delete">
+                    <button type="submit">削除</button>
+                    <input type="hidden" name="id" th:value="${name.id}" />
+                </form>
+            </td>
+            <td>
+                <form action="/update">
+                    <label>名前更新フォーム</label>
+                    <input name="name" type="text">
+                    <button type="submit">更新</button>
+                    <input type="hidden" name="id" th:value="${name.id}" />
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</body>
+
+</html>
