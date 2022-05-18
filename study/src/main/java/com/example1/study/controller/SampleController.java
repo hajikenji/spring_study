@@ -1,7 +1,8 @@
 package com.example1.study.controller;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import com.example1.study.model.UserForm;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.*;
-import org.springframework.validation.annotation.Validated;
 
 @Controller
 public class SampleController {
@@ -23,11 +23,10 @@ public class SampleController {
 
   // private List<InputThing> InputThings = new ArrayList<>();
 
-  // @NotEmpty
-  // @Size(min = 2, max = 30)
   private String testString;
 
   private Integer num = 0;
+
   private Integer sumNum = 0;
   private final SampleDao dao;
 
@@ -42,12 +41,18 @@ public class SampleController {
   }
 
   @GetMapping("/sample1")
-  String number(Model model) {
+  String number(Model model, UserForm user) {
     var name = dao.findAll();
     var nameList = dao.findAll();
 
+    // newをしないと下記エラーが発生。
+    // Cannot make a static reference to the non-static method getNum() from the
+    /// type UserForm
+    // UserForm user = new UserForm();
+    System.out.println(user.getSumNum());
+
     model.addAttribute("numPresence", this.num);
-    model.addAttribute("numAdd", sumNum);
+    model.addAttribute("numAdd", this.sumNum);
     model.addAttribute("name", name);
     model.addAttribute("nameList", nameList);
     this.num += 1;
@@ -56,27 +61,41 @@ public class SampleController {
 
   // 数字がtextできたらキャストする
   // なんでここgetじゃなくてpostなん？
-  @PostMapping("/add")
-  String addInfo(@RequestParam("num") String inputNum,
-      @RequestParam("name") String inputName,
-      @RequestParam("testString") String testString) {
+  // @PostMapping("/add")
+  // String addInfo(@RequestParam("num") String inputNum,
+  // @RequestParam("name") String inputName,
+  // @RequestParam("testString") String testString) {
 
-    if (inputNum.isEmpty()) {
+  // if (inputNum.isEmpty()) {
+  // this.sumNum = -1000 + this.num;
+  // } else {
+  // Integer num = Integer.parseInt(inputNum);
+  // this.sumNum = num + this.num;
+  // }
+  // // Integer num = Integer.parseInt(inputNum);
+  // // this.sumNum = num + this.num;
+  // // modelで送った後リダイレクトなどするとmodel消える
+  // // model.addAttribute("numAdd", sumNum);
+
+  // InputThing input = new InputThing(inputName);
+
+  // this.testString = testString;
+  // // System.out.println(this.testString);
+
+  // dao.add(input);
+
+  // return "redirect:/sample1";
+  // }
+
+  @PostMapping("/add")
+  String addTest(@Valid UserForm userForm) {
+    if (userForm.getNum() == null) {
       this.sumNum = -1000 + this.num;
     } else {
-      Integer num = Integer.parseInt(inputNum);
-      this.sumNum = num + this.num;
+      this.sumNum = userForm.getNum() + this.num;
     }
-    // Integer num = Integer.parseInt(inputNum);
-    // this.sumNum = num + this.num;
-    // modelで送った後リダイレクトなどするとmodel消える
-    // model.addAttribute("numAdd", sumNum);
 
-    InputThing input = new InputThing(inputName);
-
-    this.testString = testString;
-    System.out.println(this.testString);
-
+    InputThing input = new InputThing(userForm.getName());
     dao.add(input);
 
     return "redirect:/sample1";
