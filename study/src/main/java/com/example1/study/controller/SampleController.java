@@ -7,10 +7,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.*;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class SampleController {
@@ -41,7 +43,7 @@ public class SampleController {
   }
 
   @GetMapping("/sample1")
-  String number(Model model, UserForm user) {
+  String number(Model model, @ModelAttribute UserForm user) {
     var name = dao.findAll();
     var nameList = dao.findAll();
 
@@ -88,11 +90,19 @@ public class SampleController {
   // }
 
   @PostMapping("/add")
-  String addTest(@Valid UserForm userForm) {
+  String addTest(@Valid @ModelAttribute UserForm userForm,
+      BindingResult result,
+      Model model) {
     if (userForm.getNum() == null) {
       this.sumNum = -1000 + this.num;
     } else {
       this.sumNum = userForm.getNum() + this.num;
+    }
+
+    if (result.hasErrors()) {
+      userForm.setSumNum(3);
+      number(model, userForm);
+      return "/sample1";
     }
 
     InputThing input = new InputThing(userForm.getName());
