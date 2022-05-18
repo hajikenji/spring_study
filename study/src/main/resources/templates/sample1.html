@@ -11,16 +11,18 @@
     <h1>Hello World!</h1>
     <span th:text="${numPresence}"></span>
     
-    <form action="/add" method="post">
+    <form action="/add" method="post" th:object="${userForm}">
         <label>入力フォーム</label>
         <input name="num" type="text" />
         <br>
-        <label>名前</label>
+        <label th:text="#{name}"></label>
         <input name="name" type="text" />
+        <span th:errors="*{name}"></span>
         <label>テストstring</label>
         <input name="testString" type="text" />
         <input type="submit" value="登録" />
     </form>
+    <!-- <span th:errors="*{name}"></span> -->
 
     <span th:text="${numAdd}"></span>
     <span th:text="${name}"></span>
