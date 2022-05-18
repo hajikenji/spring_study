@@ -1,5 +1,8 @@
 package com.example1.study.controller;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.*;
+import org.springframework.validation.annotation.Validated;
 
 @Controller
 public class SampleController {
@@ -18,6 +22,10 @@ public class SampleController {
   }
 
   // private List<InputThing> InputThings = new ArrayList<>();
+
+  // @NotEmpty
+  // @Size(min = 2, max = 30)
+  private String testString;
 
   private Integer num = 0;
   private Integer sumNum = 0;
@@ -50,7 +58,8 @@ public class SampleController {
   // なんでここgetじゃなくてpostなん？
   @PostMapping("/add")
   String addInfo(@RequestParam("num") String inputNum,
-      @RequestParam("name") String inputName) {
+      @RequestParam("name") String inputName,
+      @RequestParam("testString") String testString) {
 
     if (inputNum.isEmpty()) {
       this.sumNum = -1000 + this.num;
@@ -64,6 +73,9 @@ public class SampleController {
     // model.addAttribute("numAdd", sumNum);
 
     InputThing input = new InputThing(inputName);
+
+    this.testString = testString;
+    System.out.println(this.testString);
 
     dao.add(input);
 
