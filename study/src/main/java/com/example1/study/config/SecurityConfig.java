@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final UserDetailsService userDetailsService;
+  // private final UserDetailsService userDetailsService;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
         // 「/login」と「/error」をアクセス可能にします
-        .antMatchers("/login", "/error", "/", "/register", "/entry").permitAll()
+        .antMatchers("/login", "/error", "/", "/register").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin()
@@ -52,16 +52,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
     auth
-        // // メモリ内認証を設定
-        // .inMemoryAuthentication()
-        // .withUser("admin")
-        // .password(passwordEncoder().encode("password"))
-        // .authorities("ROLE_ADMIN")
-        // .and()
-        // .withUser("user")
-        // .password(passwordEncoder().encode("password"))
-        // .authorities("ROLE_USER");
-        .userDetailsService(userDetailsService)
-        .passwordEncoder(passwordEncoder());
+        // メモリ内認証を設定
+        .inMemoryAuthentication()
+        .withUser("admin")
+        .password(passwordEncoder().encode("password"))
+        .authorities("ROLE_ADMIN")
+        .and()
+        .withUser("user")
+        .password(passwordEncoder().encode("password"))
+        .authorities("ROLE_USER");
+    // .userDetailsService(userDetailsService)
+    // .passwordEncoder(passwordEncoder());
   }
 }

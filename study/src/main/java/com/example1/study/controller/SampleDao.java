@@ -32,13 +32,13 @@ public class SampleDao {
     SqlParameterSource param = new BeanPropertySqlParameterSource(inputThing);
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
         // .usingColumns("name")
-        .withTableName("spring_study");
+        .withTableName("spring_study_crud");
 
     insert.execute(param);
   }
 
   public List<OutputThing> findAll() {
-    String query = "SELECT * FROM spring_study";
+    String query = "SELECT * FROM spring_study_crud";
     List<Map<String, Object>> resultSql = jdbcTemplate.queryForList(query);
     // var result = new ArrayList<String>();
     // resultSql.stream()
@@ -55,12 +55,12 @@ public class SampleDao {
   }
 
   public int delete(String id) {
-    int number = jdbcTemplate.update("DELETE FROM spring_study WHERE id = ?", id);
+    int number = jdbcTemplate.update("DELETE FROM spring_study_crud WHERE id = ?", id);
     return number;
   }
 
   public int update(OutputThing info) {
-    int number = jdbcTemplate.update("UPDATE spring_study SET name = ? WHERE id = ?",
+    int number = jdbcTemplate.update("UPDATE spring_study_crud SET name = ? WHERE id = ?",
         info.name(),
         info.id());
     return number;

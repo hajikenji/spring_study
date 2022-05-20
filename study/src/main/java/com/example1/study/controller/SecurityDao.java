@@ -22,7 +22,7 @@ public class SecurityDao {
     SqlParameterSource param = new BeanPropertySqlParameterSource(input);
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
         // .usingColumns("name")
-        .withTableName("spring_study");
+        .withTableName("spring_study_register");
 
     insert.execute(param);
   }
