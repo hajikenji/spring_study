@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // これを設定すると、ブラウザを閉じて、
         // 再度開いた場合でも「ログインしたまま」にできます
         .rememberMe();
+    // http.csrf().ignoringAntMatchers("/sample1", "/add");
   }
 
   @Override
