@@ -144,6 +144,9 @@ public class SampleController {
   // // return this.num;
   // this.num += 1;
   // }
+
+  // ログイン機能のユーザー登録
+
 }
 
 // @Controller

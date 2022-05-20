@@ -6,18 +6,10 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserForm {
-
-  private String testString;
-
-  private Integer num;
-
-  private Integer sumNum;
-
+public class UserRegister {
   @NotEmpty
   private String name;
 
   @Size(min = 4, max = 20)
   private String password;
-
 }
