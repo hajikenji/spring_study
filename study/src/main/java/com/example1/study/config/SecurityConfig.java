@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
         // 「/login」と「/error」をアクセス可能にします
-        .antMatchers("/login", "/error", "/", "/register").permitAll()
+        .antMatchers("/login", "/error", "/", "/register", "/register/add").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin()

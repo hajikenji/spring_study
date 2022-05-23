@@ -39,11 +39,26 @@ public class SecurityController {
 
   // 新規登録画面の処理
   @GetMapping("/register")
-  public String registerVisit(@Validated UserRegister user,
+  public String registerVisit() {
+    // if (result.hasErrors()) {
+    // System.out.println("2");
+    // return "/register";
+    // }
+    // var password = passwordEncoder.encode(user.getPassword());
+    // InputThing input = new InputThing(user.getName(), password);
+    // // InputThing input = new InputThing(user.getName(), user.getPassword());
+    // // System.out.println(password);
+    // // System.out.println(user.getPassword().getClass().getSimpleName());
+    // dao.add(input);
+    return "register";
+  }
+
+  @GetMapping("/register/add")
+  public String registerAdd(@Validated UserRegister user,
       BindingResult result) {
     if (result.hasErrors()) {
-      System.out.println("2");
-      return "/register";
+      System.out.println(result.getClass().getSimpleName());
+      return "register";
     }
     var password = passwordEncoder.encode(user.getPassword());
     InputThing input = new InputThing(user.getName(), password);
@@ -51,7 +66,7 @@ public class SecurityController {
     // System.out.println(password);
     // System.out.println(user.getPassword().getClass().getSimpleName());
     dao.add(input);
-    return "register";
+    return "redirect:/register";
   }
 
   @GetMapping("/success")
