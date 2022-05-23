@@ -1,6 +1,5 @@
 package com.example1.study.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,17 +38,7 @@ public class SecurityController {
 
   // 新規登録画面の処理
   @GetMapping("/register")
-  public String registerVisit() {
-    // if (result.hasErrors()) {
-    // System.out.println("2");
-    // return "/register";
-    // }
-    // var password = passwordEncoder.encode(user.getPassword());
-    // InputThing input = new InputThing(user.getName(), password);
-    // // InputThing input = new InputThing(user.getName(), user.getPassword());
-    // // System.out.println(password);
-    // // System.out.println(user.getPassword().getClass().getSimpleName());
-    // dao.add(input);
+  public String registerVisit(UserRegister user) {
     return "register";
   }
 

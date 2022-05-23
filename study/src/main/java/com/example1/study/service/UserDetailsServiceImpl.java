@@ -1,7 +1,6 @@
 package com.example1.study.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +67,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     GrantedAuthority authority = new SimpleGrantedAuthority("USER");
     grantList.add(authority);
 
-    UserDetails userDetails = (UserDetails) new User(user.getName(), user.getPassword(), grantList);
+    // UserDetails userDetails = (UserDetails) new User(user.getName(),
+    // user.getPassword(), grantList);
 
     return new User(user.getName(), user.getPassword(), grantList);
     // return new User("a", "b", false);
