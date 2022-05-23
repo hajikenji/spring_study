@@ -11,9 +11,12 @@ public class UserForm {
 
   private Integer num;
 
+  private Integer sumNum;
+
   @NotEmpty
   private String name;
 
-  private Integer sumNum;
+  // @Size(min = 4, max = 20)
+  // private String password;
 
 }

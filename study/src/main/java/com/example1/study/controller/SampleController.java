@@ -51,7 +51,6 @@ public class SampleController {
     // Cannot make a static reference to the non-static method getNum() from the
     /// type UserForm
     // UserForm user = new UserForm();
-    System.out.println(user.getSumNum());
 
     model.addAttribute("numPresence", this.num);
     model.addAttribute("numAdd", this.sumNum);
@@ -104,6 +103,7 @@ public class SampleController {
       number(model, userForm);
       return "/sample1";
     }
+    System.out.println(1);
 
     InputThing input = new InputThing(userForm.getName());
     dao.add(input);
@@ -144,6 +144,9 @@ public class SampleController {
   // // return this.num;
   // this.num += 1;
   // }
+
+  // ログイン機能のユーザー登録
+
 }
 
 // @Controller
