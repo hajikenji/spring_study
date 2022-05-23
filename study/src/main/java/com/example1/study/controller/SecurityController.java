@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import lombok.RequiredArgsConstructor;
 
 import com.example1.study.model.UserRegister;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.example1.study.controller.SecurityDao;
 
 @RequiredArgsConstructor
@@ -44,9 +45,9 @@ public class SecurityController {
 
   @GetMapping("/register/add")
   public String registerAdd(@Validated UserRegister user,
-      BindingResult result) {
+      BindingResult result, Model model) {
     if (result.hasErrors()) {
-      System.out.println(result.getClass().getSimpleName());
+      System.out.println(result);
       return "register";
     }
     var password = passwordEncoder.encode(user.getPassword());
@@ -54,7 +55,12 @@ public class SecurityController {
     // InputThing input = new InputThing(user.getName(), user.getPassword());
     // System.out.println(password);
     // System.out.println(user.getPassword().getClass().getSimpleName());
-    dao.add(input);
+    String resultValidation = dao.add(input);
+    if (resultValidation.equals("duplicate")) {
+      System.out.println(resultValidation);
+      model.addAttribute("originalErrorDup", true);
+      return "register";
+    }
     return "redirect:/register";
   }
 

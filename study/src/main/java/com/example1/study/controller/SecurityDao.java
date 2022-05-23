@@ -21,16 +21,15 @@ public class SecurityDao {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public void add(InputThing input) {
+  public String add(InputThing input) {
     SqlParameterSource param = new BeanPropertySqlParameterSource(input);
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
         .withTableName("spring_study_register");
 
+    // 重複チェック
     if (!find(input.name()).isEmpty()) {
-      return;
+      return "duplicate";
     }
-
-    System.out.println(!find(input.name()).isEmpty());
 
     // try {
     // find(input.name()).isEmpty();
@@ -38,10 +37,8 @@ public class SecurityDao {
     // throw new UncheckedIOException(e);
     // }
 
-    find(input.name());
-    System.out.println(input);
-
     insert.execute(param);
+    return "";
   }
 
   // 新規登録で名前をDBに登録する前に重複チェック。名前のダブりはNGにする
