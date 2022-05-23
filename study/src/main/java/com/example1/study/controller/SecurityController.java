@@ -7,12 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
 
 import com.example1.study.model.UserRegister;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.example1.study.controller.SecurityDao;
 
 @RequiredArgsConstructor
 @Controller
@@ -43,7 +42,7 @@ public class SecurityController {
     return "register";
   }
 
-  @GetMapping("/register/add")
+  @PostMapping("/register/add")
   public String registerAdd(@Validated UserRegister user,
       BindingResult result, Model model) {
     if (result.hasErrors()) {

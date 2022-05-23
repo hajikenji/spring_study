@@ -11,12 +11,13 @@
     <!-- <h1>Hello World!</h1> -->
     <span th:text="${numPresence}"></span>
     
-    <form action="/add" method="post" th:object="${userForm}">
+    <form th:action="@{/add}" method="post" th:object="${userForm}">
         <label>入力フォーム</label>
         <input name="num" type="text" />
         <br>
         <label th:text="#{name}"></label>
         <input name="name" type="text" />
+        <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> -->
         <span th:errors="*{name}"></span>
         <label>テストstring</label>
         <input name="testString" type="text" />
