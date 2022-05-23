@@ -33,6 +33,9 @@ public class SecurityController {
   // ログインまたは新規登録画面へのリンクを出すページ
   @GetMapping("/")
   public String root() {
+
+    dao.find();
+
     return "root";
   }
 
@@ -49,6 +52,7 @@ public class SecurityController {
     // InputThing input = new InputThing(user.getName(), user.getPassword());
     System.out.println(password);
     System.out.println(user.getPassword().getClass().getSimpleName());
+    // UserRegister aa = "a";
     dao.add(input);
     return "register";
   }

@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  // private final UserDetailsService userDetailsService;
+  private final UserDetailsService userDetailsService;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -54,15 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       throws Exception {
     auth
         // メモリ内認証を設定
-        .inMemoryAuthentication()
-        .withUser("admin")
-        .password(passwordEncoder().encode("password"))
-        .authorities("ROLE_ADMIN")
-        .and()
-        .withUser("user")
-        .password(passwordEncoder().encode("password"))
-        .authorities("ROLE_USER");
-    // .userDetailsService(userDetailsService)
-    // .passwordEncoder(passwordEncoder());
+        // .inMemoryAuthentication()
+        // .withUser("admin")
+        // .password(passwordEncoder().encode("password"))
+        // .authorities("ROLE_ADMIN")
+        // .and()
+        // .withUser("user")
+        // .password(passwordEncoder().encode("password"))
+        // .authorities("ROLE_USER");
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(passwordEncoder());
   }
 }
