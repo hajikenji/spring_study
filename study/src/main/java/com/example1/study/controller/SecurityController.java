@@ -34,8 +34,6 @@ public class SecurityController {
   @GetMapping("/")
   public String root() {
 
-    dao.find();
-
     return "root";
   }
 
@@ -45,29 +43,16 @@ public class SecurityController {
       BindingResult result) {
     if (result.hasErrors()) {
       System.out.println("2");
-      return "register";
+      return "/register";
     }
     var password = passwordEncoder.encode(user.getPassword());
     InputThing input = new InputThing(user.getName(), password);
     // InputThing input = new InputThing(user.getName(), user.getPassword());
-    System.out.println(password);
-    System.out.println(user.getPassword().getClass().getSimpleName());
-    // UserRegister aa = "a";
+    // System.out.println(password);
+    // System.out.println(user.getPassword().getClass().getSimpleName());
     dao.add(input);
     return "register";
   }
-
-  // // 新規登録処理
-  // @RequestMapping("/entry")
-  // public String registerUser(@Validated UserForm user,
-  // BindingResult result) {
-  // if (result.hasErrors()) {
-  // // return "register";
-  // return "redirect:/register";
-  // }
-  // // return "redirect:/register";
-  // return "register";
-  // }
 
   @GetMapping("/success")
   public String success(Authentication loginUser, Model model) {

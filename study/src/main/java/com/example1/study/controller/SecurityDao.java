@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +25,30 @@ public class SecurityDao {
   public void add(InputThing input) {
     SqlParameterSource param = new BeanPropertySqlParameterSource(input);
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
-        // .usingColumns("name")
         .withTableName("spring_study_register");
+
+    if (!find(input.name()).isEmpty()) {
+      return;
+    }
+
+    System.out.println(!find(input.name()).isEmpty());
+
+    // try {
+    // find(input.name()).isEmpty();
+    // } catch (Exception e) {
+    // throw new UncheckedIOException(e);
+    // }
+
+    find(input.name());
+    System.out.println(input);
 
     insert.execute(param);
   }
 
-  public void find() {
-    String query = "SELECT 1 FROM spring_study_register WHERE spring_study_register.name = 'dfa'";
-    List<Map<String, Object>> resultSql = jdbcTemplate.queryForList(query);
-    System.out.println(resultSql);
+  // 新規登録で名前をDBに登録する前に重複チェック。名前のダブりはNGにする
+  public List<Map<String, Object>> find(String name) {
+    String query = "SELECT 1 FROM spring_study_register WHERE spring_study_register.name = ? ";
+    List<Map<String, Object>> resultSql = jdbcTemplate.queryForList(query, name);
+    return resultSql;
   }
 }

@@ -23,5 +23,10 @@
     <!-- <input type="submit" value="登録する" /> -->
     <button type="submit">登録する</button>
   </form>
+  <!-- <div th:object="${user}">
+    <span th:errors="*{name}"></span>
+  </div> -->
+  <br>
+  <a th:href="@{/login}">ログイン</a>
 </body>
 </html>
