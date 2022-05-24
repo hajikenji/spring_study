@@ -52,8 +52,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     List<Map<String, Object>> resultSql = jdbcTemplate.queryForList(query, userName);
 
     UserRegister user = new UserRegister();
-    user.setName(resultSql.get(0).get("name").toString());
-    user.setPassword(resultSql.get(0).get("password").toString());
+    try {
+      user.setName(resultSql.get(0).get("name").toString());
+      user.setPassword(resultSql.get(0).get("password").toString());
+    } catch (Exception e) {
+      throw new UsernameNotFoundException("not fouond");
+    }
 
     if (resultSql.isEmpty()) {
       throw new UsernameNotFoundException(" not found");
