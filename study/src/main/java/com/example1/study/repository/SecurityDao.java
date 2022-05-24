@@ -1,4 +1,4 @@
-package com.example1.study.controller;
+package com.example1.study.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.example1.study.controller.SecurityController.InputThing;
+import com.example1.study.model.UserRegister;
 
 @Service
 public class SecurityDao {
@@ -21,13 +21,13 @@ public class SecurityDao {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public String add(InputThing input) {
-    SqlParameterSource param = new BeanPropertySqlParameterSource(input);
+  public String add(UserRegister user) {
+    SqlParameterSource param = new BeanPropertySqlParameterSource(user);
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
         .withTableName("spring_study_register");
 
     // 重複チェック
-    if (!find(input.name()).isEmpty()) {
+    if (!find(user.getName()).isEmpty()) {
       return "duplicate";
     }
 

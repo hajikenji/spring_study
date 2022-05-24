@@ -7,17 +7,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
 
 import com.example1.study.model.UserRegister;
+import com.example1.study.repository.SecurityDao;
 
 @RequiredArgsConstructor
 @Controller
 public class SecurityController {
 
-  record InputThing(String name, String password) {
+  public record InputThing(String name, String password) {
   }
 
   private final SecurityDao dao;
@@ -43,18 +45,20 @@ public class SecurityController {
   }
 
   @PostMapping("/register/add")
-  public String registerAdd(@Validated UserRegister user,
+  public String registerAdd(@Validated @ModelAttribute UserRegister user,
       BindingResult result, Model model) {
     if (result.hasErrors()) {
       System.out.println(result);
       return "register";
     }
-    var password = passwordEncoder.encode(user.getPassword());
-    InputThing input = new InputThing(user.getName(), password);
+    // var password = passwordEncoder.encode(user.getPassword());
+    // InputThing input = new InputThing(user.getName(), password);
+
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     // InputThing input = new InputThing(user.getName(), user.getPassword());
     // System.out.println(password);
     // System.out.println(user.getPassword().getClass().getSimpleName());
-    String resultValidation = dao.add(input);
+    String resultValidation = dao.add(user);
     if (resultValidation.equals("duplicate")) {
       System.out.println(resultValidation);
       model.addAttribute("originalErrorDup", true);
