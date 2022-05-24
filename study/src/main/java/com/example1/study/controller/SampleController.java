@@ -1,6 +1,7 @@
 package com.example1.study.controller;
 
 import com.example1.study.model.UserForm;
+import com.example1.study.repository.SampleDao;
 
 import javax.validation.Valid;
 
@@ -17,15 +18,15 @@ import org.springframework.validation.BindingResult;
 @Controller
 public class SampleController {
 
-  record InputThing(String name) {
+  public record InputThing(String name) {
   }
 
-  record OutputThing(String id, String name) {
+  public record OutputThing(String id, String name) {
   }
 
   // private List<InputThing> InputThings = new ArrayList<>();
 
-  private String testString;
+  // private String testString;
 
   private Integer num = 0;
 
@@ -103,10 +104,10 @@ public class SampleController {
       number(model, userForm);
       return "/sample1";
     }
-    System.out.println(1);
 
-    InputThing input = new InputThing(userForm.getName());
-    dao.add(input);
+    // System.out.println(userForm);
+    // InputThing input = new InputThing(userForm.getName());
+    dao.add(userForm);
 
     return "redirect:/sample1";
   }
