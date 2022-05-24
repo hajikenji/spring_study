@@ -52,17 +52,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     List<Map<String, Object>> resultSql = jdbcTemplate.queryForList(query, userName);
 
     UserRegister user = new UserRegister();
+    // ログイン時に名前OKパスNGだった際、setNameを例外処理しないとログイン画面のエラーメッセージが
+    /// Index out of bounds for length 0 みたいなのになっちゃう
+
+    // if (resultSql.isEmpty()) {
+    // throw new UsernameNotFoundException(" not found");
+    // } else {
+    // user.setName(resultSql.get(0).get("name").toString());
+    // user.setPassword(resultSql.get(0).get("password").toString());
+    // return createUserDetails(user);
+    // }
     try {
       user.setName(resultSql.get(0).get("name").toString());
       user.setPassword(resultSql.get(0).get("password").toString());
-    } catch (Exception e) {
-      throw new UsernameNotFoundException("not fouond");
-    }
-
-    if (resultSql.isEmpty()) {
-      throw new UsernameNotFoundException(" not found");
-    } else {
       return createUserDetails(user);
+    } catch (Exception e) {
+      throw new UsernameNotFoundException(" not found");
     }
   }
 
